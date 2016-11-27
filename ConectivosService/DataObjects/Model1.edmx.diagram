@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d9760151b00a4627b34a2b819e63300e" Name="Diagram1">
+        <EntityTypeShape EntityType="TP_SeminarioModel.beacon" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_SeminarioModel.colectivo" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_SeminarioModel.colectivo_beacon" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_SeminarioModel.parada" Width="1.5" PointX="6" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_SeminarioModel.pasajero" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_SeminarioModel.reclamo" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_SeminarioModel.recorrido" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_SeminarioModel.recorrido_parada" Width="1.5" PointX="8.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_SeminarioModel.viaje_colectivo" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TP_SeminarioModel.viaje_pasajero" Width="1.5" PointX="8.25" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="TP_SeminarioModel.fk_cb_beacon" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_SeminarioModel.fk_cb_colectivo" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_SeminarioModel.fk_vc_colectivo" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_SeminarioModel.fk_rp_parada" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_SeminarioModel.fk_vp_parada" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_SeminarioModel.fk_r_pasajero" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_SeminarioModel.fk_vp_pasajero" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_SeminarioModel.fk_rp_recorrido" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_SeminarioModel.fk_vc_recorrido" ManuallyRouted="false" />
+        <AssociationConnector Association="TP_SeminarioModel.fk_vp_viaje_colectivo" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

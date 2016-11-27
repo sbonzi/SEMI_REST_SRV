@@ -1,0 +1,717 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TP_SeminarioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="beacon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="serial" Type="nvarchar" MaxLength="100" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="colectivo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="cantidad_asientos" Type="int" />
+          <Property Name="capacidad_maxima" Type="int" />
+          <Property Name="interno" Type="int" />
+          <Property Name="patente" Type="nvarchar" MaxLength="15" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="colectivo_beacon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="id_colectivo" Type="bigint" Nullable="false" />
+          <Property Name="id_beacon" Type="bigint" Nullable="false" />
+          <Property Name="estado" Type="int" />
+          <Property Name="fecha_desde" Type="date" />
+          <Property Name="fecha_hasta" Type="date" />
+        </EntityType>
+        <EntityType Name="parada">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="direccion" Type="nvarchar" MaxLength="100" />
+          <Property Name="latitud" Type="int" />
+          <Property Name="longitud" Type="int" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="pasajero">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="usuario" Type="nvarchar" MaxLength="50" />
+          <Property Name="mail" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="reclamo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="id_pasajero" Type="bigint" Nullable="false" />
+          <Property Name="detalle" Type="nvarchar" MaxLength="500" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="recorrido">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="ramal" Type="nvarchar" MaxLength="50" />
+          <Property Name="origen" Type="nvarchar" MaxLength="50" />
+          <Property Name="destino" Type="nvarchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="recorrido_parada">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="id_recorrido" Type="bigint" Nullable="false" />
+          <Property Name="id_parada" Type="bigint" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="viaje_colectivo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="id_colectivo" Type="bigint" Nullable="false" />
+          <Property Name="id_recorrido" Type="bigint" Nullable="false" />
+          <Property Name="fecha" Type="date" />
+        </EntityType>
+        <EntityType Name="viaje_pasajero">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="id_viaje_colectivo" Type="bigint" Nullable="false" />
+          <Property Name="id_pasajero" Type="bigint" Nullable="false" />
+          <Property Name="id_parada" Type="bigint" Nullable="false" />
+          <Property Name="latitud" Type="int" />
+          <Property Name="longitud" Type="int" />
+          <Property Name="fecha_desde" Type="date" />
+          <Property Name="fecha_hasta" Type="date" />
+        </EntityType>
+        <Association Name="fk_cb_beacon">
+          <End Role="beacon" Type="Self.beacon" Multiplicity="1" />
+          <End Role="colectivo_beacon" Type="Self.colectivo_beacon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beacon">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="colectivo_beacon">
+              <PropertyRef Name="id_beacon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cb_colectivo">
+          <End Role="colectivo" Type="Self.colectivo" Multiplicity="1" />
+          <End Role="colectivo_beacon" Type="Self.colectivo_beacon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="colectivo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="colectivo_beacon">
+              <PropertyRef Name="id_colectivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_r_pasajero">
+          <End Role="pasajero" Type="Self.pasajero" Multiplicity="1" />
+          <End Role="reclamo" Type="Self.reclamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pasajero">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reclamo">
+              <PropertyRef Name="id_pasajero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rp_parada">
+          <End Role="parada" Type="Self.parada" Multiplicity="1" />
+          <End Role="recorrido_parada" Type="Self.recorrido_parada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="parada">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recorrido_parada">
+              <PropertyRef Name="id_parada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rp_recorrido">
+          <End Role="recorrido" Type="Self.recorrido" Multiplicity="1" />
+          <End Role="recorrido_parada" Type="Self.recorrido_parada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recorrido">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recorrido_parada">
+              <PropertyRef Name="id_recorrido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vc_colectivo">
+          <End Role="colectivo" Type="Self.colectivo" Multiplicity="1" />
+          <End Role="viaje_colectivo" Type="Self.viaje_colectivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="colectivo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="viaje_colectivo">
+              <PropertyRef Name="id_colectivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vc_recorrido">
+          <End Role="recorrido" Type="Self.recorrido" Multiplicity="1" />
+          <End Role="viaje_colectivo" Type="Self.viaje_colectivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recorrido">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="viaje_colectivo">
+              <PropertyRef Name="id_recorrido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vp_parada">
+          <End Role="parada" Type="Self.parada" Multiplicity="1" />
+          <End Role="viaje_pasajero" Type="Self.viaje_pasajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="parada">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="viaje_pasajero">
+              <PropertyRef Name="id_parada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vp_pasajero">
+          <End Role="pasajero" Type="Self.pasajero" Multiplicity="1" />
+          <End Role="viaje_pasajero" Type="Self.viaje_pasajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pasajero">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="viaje_pasajero">
+              <PropertyRef Name="id_pasajero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vp_viaje_colectivo">
+          <End Role="viaje_colectivo" Type="Self.viaje_colectivo" Multiplicity="1" />
+          <End Role="viaje_pasajero" Type="Self.viaje_pasajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="viaje_colectivo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="viaje_pasajero">
+              <PropertyRef Name="id_viaje_colectivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TP_SeminarioModelStoreContainer">
+          <EntitySet Name="beacon" EntityType="Self.beacon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="colectivo" EntityType="Self.colectivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="colectivo_beacon" EntityType="Self.colectivo_beacon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="parada" EntityType="Self.parada" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pasajero" EntityType="Self.pasajero" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reclamo" EntityType="Self.reclamo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recorrido" EntityType="Self.recorrido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recorrido_parada" EntityType="Self.recorrido_parada" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="viaje_colectivo" EntityType="Self.viaje_colectivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="viaje_pasajero" EntityType="Self.viaje_pasajero" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_cb_beacon" Association="Self.fk_cb_beacon">
+            <End Role="beacon" EntitySet="beacon" />
+            <End Role="colectivo_beacon" EntitySet="colectivo_beacon" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cb_colectivo" Association="Self.fk_cb_colectivo">
+            <End Role="colectivo" EntitySet="colectivo" />
+            <End Role="colectivo_beacon" EntitySet="colectivo_beacon" />
+          </AssociationSet>
+          <AssociationSet Name="fk_r_pasajero" Association="Self.fk_r_pasajero">
+            <End Role="pasajero" EntitySet="pasajero" />
+            <End Role="reclamo" EntitySet="reclamo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rp_parada" Association="Self.fk_rp_parada">
+            <End Role="parada" EntitySet="parada" />
+            <End Role="recorrido_parada" EntitySet="recorrido_parada" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rp_recorrido" Association="Self.fk_rp_recorrido">
+            <End Role="recorrido" EntitySet="recorrido" />
+            <End Role="recorrido_parada" EntitySet="recorrido_parada" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vc_colectivo" Association="Self.fk_vc_colectivo">
+            <End Role="colectivo" EntitySet="colectivo" />
+            <End Role="viaje_colectivo" EntitySet="viaje_colectivo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vc_recorrido" Association="Self.fk_vc_recorrido">
+            <End Role="recorrido" EntitySet="recorrido" />
+            <End Role="viaje_colectivo" EntitySet="viaje_colectivo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vp_parada" Association="Self.fk_vp_parada">
+            <End Role="parada" EntitySet="parada" />
+            <End Role="viaje_pasajero" EntitySet="viaje_pasajero" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vp_pasajero" Association="Self.fk_vp_pasajero">
+            <End Role="pasajero" EntitySet="pasajero" />
+            <End Role="viaje_pasajero" EntitySet="viaje_pasajero" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vp_viaje_colectivo" Association="Self.fk_vp_viaje_colectivo">
+            <End Role="viaje_colectivo" EntitySet="viaje_colectivo" />
+            <End Role="viaje_pasajero" EntitySet="viaje_pasajero" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TP_SeminarioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="beacon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="serial" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="estado" Type="Int32" />
+        </EntityType>
+        <EntityType Name="colectivo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="cantidad_asientos" Type="Int32" />
+          <Property Name="capacidad_maxima" Type="Int32" />
+          <Property Name="interno" Type="Int32" />
+          <Property Name="patente" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="viaje_colectivo" Relationship="Self.fk_vc_colectivo" FromRole="colectivo" ToRole="viaje_colectivo" />
+        </EntityType>
+        <EntityType Name="colectivo_beacon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="id_colectivo" Type="Int64" Nullable="false" />
+          <Property Name="id_beacon" Type="Int64" Nullable="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="fecha_desde" Type="DateTime" Precision="0" />
+          <Property Name="fecha_hasta" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="beacon" Relationship="Self.fk_cb_beacon" FromRole="colectivo_beacon" ToRole="beacon" />
+          <NavigationProperty Name="colectivo" Relationship="Self.fk_cb_colectivo" FromRole="colectivo_beacon" ToRole="colectivo" />
+        </EntityType>
+        <EntityType Name="parada">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="latitud" Type="Int32" />
+          <Property Name="longitud" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="recorrido_parada" Relationship="Self.fk_rp_parada" FromRole="parada" ToRole="recorrido_parada" />
+          <NavigationProperty Name="viaje_pasajero" Relationship="Self.fk_vp_parada" FromRole="parada" ToRole="viaje_pasajero" />
+        </EntityType>
+        <EntityType Name="pasajero">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="reclamo" Relationship="Self.fk_r_pasajero" FromRole="pasajero" ToRole="reclamo" />
+          <NavigationProperty Name="viaje_pasajero" Relationship="Self.fk_vp_pasajero" FromRole="pasajero" ToRole="viaje_pasajero" />
+        </EntityType>
+        <EntityType Name="reclamo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="id_pasajero" Type="Int64" Nullable="false" />
+          <Property Name="detalle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="pasajero" Relationship="Self.fk_r_pasajero" FromRole="reclamo" ToRole="pasajero" />
+        </EntityType>
+        <EntityType Name="recorrido">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="ramal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="origen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="destino" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="recorrido_parada" Relationship="Self.fk_rp_recorrido" FromRole="recorrido" ToRole="recorrido_parada" />
+          <NavigationProperty Name="viaje_colectivo" Relationship="Self.fk_vc_recorrido" FromRole="recorrido" ToRole="viaje_colectivo" />
+        </EntityType>
+        <EntityType Name="recorrido_parada">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="id_recorrido" Type="Int64" Nullable="false" />
+          <Property Name="id_parada" Type="Int64" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="parada" Relationship="Self.fk_rp_parada" FromRole="recorrido_parada" ToRole="parada" />
+          <NavigationProperty Name="recorrido" Relationship="Self.fk_rp_recorrido" FromRole="recorrido_parada" ToRole="recorrido" />
+        </EntityType>
+        <EntityType Name="viaje_colectivo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="id_colectivo" Type="Int64" Nullable="false" />
+          <Property Name="id_recorrido" Type="Int64" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="colectivo" Relationship="Self.fk_vc_colectivo" FromRole="viaje_colectivo" ToRole="colectivo" />
+          <NavigationProperty Name="recorrido" Relationship="Self.fk_vc_recorrido" FromRole="viaje_colectivo" ToRole="recorrido" />
+          <NavigationProperty Name="viaje_pasajero" Relationship="Self.fk_vp_viaje_colectivo" FromRole="viaje_colectivo" ToRole="viaje_pasajero" />
+        </EntityType>
+        <EntityType Name="viaje_pasajero">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="id_viaje_colectivo" Type="Int64" Nullable="false" />
+          <Property Name="id_pasajero" Type="Int64" Nullable="false" />
+          <Property Name="id_parada" Type="Int64" Nullable="false" />
+          <Property Name="latitud" Type="Int32" />
+          <Property Name="longitud" Type="Int32" />
+          <Property Name="fecha_desde" Type="DateTime" Precision="0" />
+          <Property Name="fecha_hasta" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="parada" Relationship="Self.fk_vp_parada" FromRole="viaje_pasajero" ToRole="parada" />
+          <NavigationProperty Name="pasajero" Relationship="Self.fk_vp_pasajero" FromRole="viaje_pasajero" ToRole="pasajero" />
+          <NavigationProperty Name="viaje_colectivo" Relationship="Self.fk_vp_viaje_colectivo" FromRole="viaje_pasajero" ToRole="viaje_colectivo" />
+        </EntityType>
+        <Association Name="fk_cb_beacon">
+          <End Role="beacon" Type="Self.beacon" Multiplicity="1" />
+          <End Role="colectivo_beacon" Type="Self.colectivo_beacon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beacon">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="colectivo_beacon">
+              <PropertyRef Name="id_beacon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cb_colectivo">
+          <End Role="colectivo" Type="Self.colectivo" Multiplicity="1" />
+          <End Role="colectivo_beacon" Type="Self.colectivo_beacon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="colectivo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="colectivo_beacon">
+              <PropertyRef Name="id_colectivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vc_colectivo">
+          <End Role="colectivo" Type="Self.colectivo" Multiplicity="1" />
+          <End Role="viaje_colectivo" Type="Self.viaje_colectivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="colectivo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="viaje_colectivo">
+              <PropertyRef Name="id_colectivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rp_parada">
+          <End Role="parada" Type="Self.parada" Multiplicity="1" />
+          <End Role="recorrido_parada" Type="Self.recorrido_parada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="parada">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recorrido_parada">
+              <PropertyRef Name="id_parada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vp_parada">
+          <End Role="parada" Type="Self.parada" Multiplicity="1" />
+          <End Role="viaje_pasajero" Type="Self.viaje_pasajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="parada">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="viaje_pasajero">
+              <PropertyRef Name="id_parada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_r_pasajero">
+          <End Role="pasajero" Type="Self.pasajero" Multiplicity="1" />
+          <End Role="reclamo" Type="Self.reclamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pasajero">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reclamo">
+              <PropertyRef Name="id_pasajero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vp_pasajero">
+          <End Role="pasajero" Type="Self.pasajero" Multiplicity="1" />
+          <End Role="viaje_pasajero" Type="Self.viaje_pasajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pasajero">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="viaje_pasajero">
+              <PropertyRef Name="id_pasajero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rp_recorrido">
+          <End Role="recorrido" Type="Self.recorrido" Multiplicity="1" />
+          <End Role="recorrido_parada" Type="Self.recorrido_parada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recorrido">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recorrido_parada">
+              <PropertyRef Name="id_recorrido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vc_recorrido">
+          <End Role="recorrido" Type="Self.recorrido" Multiplicity="1" />
+          <End Role="viaje_colectivo" Type="Self.viaje_colectivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recorrido">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="viaje_colectivo">
+              <PropertyRef Name="id_recorrido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vp_viaje_colectivo">
+          <End Role="viaje_colectivo" Type="Self.viaje_colectivo" Multiplicity="1" />
+          <End Role="viaje_pasajero" Type="Self.viaje_pasajero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="viaje_colectivo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="viaje_pasajero">
+              <PropertyRef Name="id_viaje_colectivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TP_SeminarioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="beacon" EntityType="Self.beacon" />
+          <EntitySet Name="colectivo" EntityType="Self.colectivo" />
+          <EntitySet Name="colectivo_beacon" EntityType="Self.colectivo_beacon" />
+          <EntitySet Name="parada" EntityType="Self.parada" />
+          <EntitySet Name="pasajero" EntityType="Self.pasajero" />
+          <EntitySet Name="reclamo" EntityType="Self.reclamo" />
+          <EntitySet Name="recorrido" EntityType="Self.recorrido" />
+          <EntitySet Name="recorrido_parada" EntityType="Self.recorrido_parada" />
+          <EntitySet Name="viaje_colectivo" EntityType="Self.viaje_colectivo" />
+          <EntitySet Name="viaje_pasajero" EntityType="Self.viaje_pasajero" />
+          <AssociationSet Name="fk_cb_beacon" Association="Self.fk_cb_beacon">
+            <End Role="beacon" EntitySet="beacon" />
+            <End Role="colectivo_beacon" EntitySet="colectivo_beacon" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cb_colectivo" Association="Self.fk_cb_colectivo">
+            <End Role="colectivo" EntitySet="colectivo" />
+            <End Role="colectivo_beacon" EntitySet="colectivo_beacon" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vc_colectivo" Association="Self.fk_vc_colectivo">
+            <End Role="colectivo" EntitySet="colectivo" />
+            <End Role="viaje_colectivo" EntitySet="viaje_colectivo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rp_parada" Association="Self.fk_rp_parada">
+            <End Role="parada" EntitySet="parada" />
+            <End Role="recorrido_parada" EntitySet="recorrido_parada" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vp_parada" Association="Self.fk_vp_parada">
+            <End Role="parada" EntitySet="parada" />
+            <End Role="viaje_pasajero" EntitySet="viaje_pasajero" />
+          </AssociationSet>
+          <AssociationSet Name="fk_r_pasajero" Association="Self.fk_r_pasajero">
+            <End Role="pasajero" EntitySet="pasajero" />
+            <End Role="reclamo" EntitySet="reclamo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vp_pasajero" Association="Self.fk_vp_pasajero">
+            <End Role="pasajero" EntitySet="pasajero" />
+            <End Role="viaje_pasajero" EntitySet="viaje_pasajero" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rp_recorrido" Association="Self.fk_rp_recorrido">
+            <End Role="recorrido" EntitySet="recorrido" />
+            <End Role="recorrido_parada" EntitySet="recorrido_parada" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vc_recorrido" Association="Self.fk_vc_recorrido">
+            <End Role="recorrido" EntitySet="recorrido" />
+            <End Role="viaje_colectivo" EntitySet="viaje_colectivo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vp_viaje_colectivo" Association="Self.fk_vp_viaje_colectivo">
+            <End Role="viaje_colectivo" EntitySet="viaje_colectivo" />
+            <End Role="viaje_pasajero" EntitySet="viaje_pasajero" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TP_SeminarioModelStoreContainer" CdmEntityContainer="TP_SeminarioEntities">
+          <EntitySetMapping Name="beacon">
+            <EntityTypeMapping TypeName="TP_SeminarioModel.beacon">
+              <MappingFragment StoreEntitySet="beacon">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="serial" ColumnName="serial" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="colectivo">
+            <EntityTypeMapping TypeName="TP_SeminarioModel.colectivo">
+              <MappingFragment StoreEntitySet="colectivo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cantidad_asientos" ColumnName="cantidad_asientos" />
+                <ScalarProperty Name="capacidad_maxima" ColumnName="capacidad_maxima" />
+                <ScalarProperty Name="interno" ColumnName="interno" />
+                <ScalarProperty Name="patente" ColumnName="patente" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="colectivo_beacon">
+            <EntityTypeMapping TypeName="TP_SeminarioModel.colectivo_beacon">
+              <MappingFragment StoreEntitySet="colectivo_beacon">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_colectivo" ColumnName="id_colectivo" />
+                <ScalarProperty Name="id_beacon" ColumnName="id_beacon" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_desde" ColumnName="fecha_desde" />
+                <ScalarProperty Name="fecha_hasta" ColumnName="fecha_hasta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="parada">
+            <EntityTypeMapping TypeName="TP_SeminarioModel.parada">
+              <MappingFragment StoreEntitySet="parada">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="latitud" ColumnName="latitud" />
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pasajero">
+            <EntityTypeMapping TypeName="TP_SeminarioModel.pasajero">
+              <MappingFragment StoreEntitySet="pasajero">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reclamo">
+            <EntityTypeMapping TypeName="TP_SeminarioModel.reclamo">
+              <MappingFragment StoreEntitySet="reclamo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_pasajero" ColumnName="id_pasajero" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recorrido">
+            <EntityTypeMapping TypeName="TP_SeminarioModel.recorrido">
+              <MappingFragment StoreEntitySet="recorrido">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ramal" ColumnName="ramal" />
+                <ScalarProperty Name="origen" ColumnName="origen" />
+                <ScalarProperty Name="destino" ColumnName="destino" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recorrido_parada">
+            <EntityTypeMapping TypeName="TP_SeminarioModel.recorrido_parada">
+              <MappingFragment StoreEntitySet="recorrido_parada">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_recorrido" ColumnName="id_recorrido" />
+                <ScalarProperty Name="id_parada" ColumnName="id_parada" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="viaje_colectivo">
+            <EntityTypeMapping TypeName="TP_SeminarioModel.viaje_colectivo">
+              <MappingFragment StoreEntitySet="viaje_colectivo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_colectivo" ColumnName="id_colectivo" />
+                <ScalarProperty Name="id_recorrido" ColumnName="id_recorrido" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="viaje_pasajero">
+            <EntityTypeMapping TypeName="TP_SeminarioModel.viaje_pasajero">
+              <MappingFragment StoreEntitySet="viaje_pasajero">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_viaje_colectivo" ColumnName="id_viaje_colectivo" />
+                <ScalarProperty Name="id_pasajero" ColumnName="id_pasajero" />
+                <ScalarProperty Name="id_parada" ColumnName="id_parada" />
+                <ScalarProperty Name="latitud" ColumnName="latitud" />
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+                <ScalarProperty Name="fecha_desde" ColumnName="fecha_desde" />
+                <ScalarProperty Name="fecha_hasta" ColumnName="fecha_hasta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
