@@ -1,19 +1,53 @@
 student,date,effortScore,class,acPercentile
-Andrea Pirlo,01/08/2021,72,Music,0.2
-Andrea Pirlo,02/08/2021,84,Music,0.25
-Andrea Pirlo,03/08/2021,93,Music,0.27
-Andrea Pirlo,04/08/2021,100,Music,0.3
-Leonel Messi,01/08/2021,70,Music,0.15
-Leonel Messi,02/08/2021,71,Music,0.2
-Leonel Messi,03/08/2021,72,Music,Music,0.3
-Leonel Messi,04/08/2021,75,Music,Music,0.4
-Diego Armando Maradona,01/08/2021,45,Arte,0.1
-Diego Armando Maradona,02/08/2021,50,Arte,0.2
-Diego Armando Maradona,03/08/2021,55,Arte,0.2
-Diego Armando Maradona,04/08/2021,60,Arte,0.4
-Enrique Bochini,01/08/2021,35,11537966,Ed Fisica,0.7
-Enrique Bochini,02/08/2021,40,11537966,Ed Fisica,0.8
-Enrique Bochini,03/08/2021,45,11537966,Ed Fisica,0.9
-Enrique Bochini,04/08/2021,50,11537966,Ed Fisica,0.95
-
-
+Andrea Pirlo,01/08/2021,45,Music,0.2
+Andrea Pirlo,02/08/2021,47,Music,0.22
+Andrea Pirlo,03/08/2021,50,Music,0.23
+Andrea Pirlo,04/08/2021,52,Music,0.24
+Andrea Pirlo,05/08/2021,52,Music,0.26
+Andrea Pirlo,06/08/2021,54,Music,0.26
+Andrea Pirlo,07/08/2021,58,Music,0.27
+Andrea Pirlo,08/08/2021,60,Music,0.27
+Andrea Pirlo,09/08/2021,62,Music,0.28
+Andrea Pirlo,10/08/2021,62,Music,0.3
+Andrea Pirlo,11/08/2021,64,Music,0.31
+Andrea Pirlo,12/08/2021,66,Music,0.33
+Andrea Pirlo,13/08/2021,70,Music,0.35
+Leonel Messi,01/08/2021,47,Music,0.2
+Leonel Messi,02/08/2021,49,Music,0.22
+Leonel Messi,03/08/2021,52,Music,0.23
+Leonel Messi,04/08/2021,54,Music,0.24
+Leonel Messi,05/08/2021,54,Music,0.25
+Leonel Messi,06/08/2021,56,Music,0.25
+Leonel Messi,07/08/2021,60,Music,0.26
+Leonel Messi,08/08/2021,62,Music,0.26
+Leonel Messi,09/08/2021,64,Music,0.27
+Leonel Messi,10/08/2021,64,Music,0.29
+Leonel Messi,11/08/2021,66,Music,0.30
+Leonel Messi,12/08/2021,68,Music,0.32
+Leonel Messi,13/08/2021,72,Music,0.34
+Diego Armando Maradona,01/08/2021,45,Music,0.3
+Diego Armando Maradona,02/08/2021,47,Music,0.32
+Diego Armando Maradona,03/08/2021,50,Music,0.33
+Diego Armando Maradona,04/08/2021,52,Music,0.34
+Diego Armando Maradona,05/08/2021,52,Music,0.36
+Diego Armando Maradona,06/08/2021,54,Music,0.36
+Diego Armando Maradona,07/08/2021,58,Music,0.37
+Diego Armando Maradona,08/08/2021,60,Music,0.37
+Diego Armando Maradona,09/08/2021,62,Music,0.38
+Diego Armando Maradona,10/08/2021,62,Music,0.4
+Diego Armando Maradona,11/08/2021,64,Music,0.41
+Diego Armando Maradona,12/08/2021,66,Music,0.43
+Diego Armando Maradona,13/08/2021,70,Music,0.45
+Enrique Bochini,01/08/2021,55,Music,0.4
+Enrique Bochini,02/08/2021,57,Music,0.42
+Enrique Bochini,03/08/2021,60,Music,0.43
+Enrique Bochini,04/08/2021,62,Music,0.44
+Enrique Bochini,05/08/2021,62,Music,0.46
+Enrique Bochini,06/08/2021,64,Music,0.46
+Enrique Bochini,07/08/2021,68,Music,0.47
+Enrique Bochini,08/08/2021,70,Music,0.47
+Enrique Bochini,09/08/2021,72,Music,0.48
+Enrique Bochini,10/08/2021,72,Music,0.5
+Enrique Bochini,11/08/2021,74,Music,0.51
+Enrique Bochini,12/08/2021,76,Music,0.53
+Enrique Bochini,13/08/2021,80,Music,0.55
