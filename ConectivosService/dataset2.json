@@ -1,0 +1,51 @@
+[
+  {
+    "student": 477768,
+    "date": "03/2021",
+    "effortScore": 83,
+    "class": "2021 Year 7",
+    "acPercentile": 0.9
+  },
+  {
+    "student": 446484,
+    "date": "03/2021",
+    "effortScore": 83,
+    "class": "2021 Year 7",
+    "acPercentile": 0.58
+  },
+  {
+    "student": 383448,
+    "date": "03/2021",
+    "effortScore": 95,
+    "class": "2021 Year 7",
+    "acPercentile": 0.97
+  },
+  {
+    "student": 394950,
+    "date": "03/2021",
+    "effortScore": 64,
+    "class": "2021 Year 7",
+    "acPercentile": 0.22
+  },
+  {
+    "student": 439751,
+    "date": "03/2021",
+    "effortScore": 81,
+    "class": "2021 Year 7",
+    "acPercentile": 0.38
+  },
+  {
+    "student": 413309,
+    "date": "03/2021",
+    "effortScore": 81,
+    "class": "2021 Year 7",
+    "acPercentile": 0.62
+  },
+  {
+    "student": 417021,
+    "date": "03/2021",
+    "effortScore": 95,
+    "class": "2021 Year 7",
+    "acPercentile": 0.68
+  }
+]
